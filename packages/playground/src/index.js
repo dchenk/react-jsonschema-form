@@ -122,13 +122,13 @@ const themes = {
   },
   primereact: {
     stylesheets: [
-        "https://unpkg.com/primeicons@5.0.0/primeicons.css",
-        "https://unpkg.com/primereact@7.2.0/resources/themes/lara-light-indigo/theme.css",
-        "https://unpkg.com/primereact@7.2.0/resources/primereact.min.css",
-        "https://unpkg.com/primeflex@3.1.3/primeflex.min.css"
+      "https://unpkg.com/primeicons@5.0.0/primeicons.css",
+      "https://unpkg.com/primereact@7.2.0/resources/themes/lara-light-indigo/theme.css",
+      "https://unpkg.com/primereact@7.2.0/resources/primereact.min.css",
+      "https://unpkg.com/primeflex@3.1.3/primeflex.min.css",
     ],
     theme: PrimeReactTheme,
-  }
+  },
 };
 
 render(<Playground themes={themes} />, document.getElementById("app"));
