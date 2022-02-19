@@ -29,7 +29,7 @@ jobs:
       env:
         SHOW_NETLIFY_BADGE: true
     - name: Build
-      if: github.ref == 'refs/heads/master'
+#      if: github.ref == 'refs/heads/master'
       run: npm run build
 
     - if: matrix.node-version == '14.x'
@@ -61,7 +61,7 @@ jobs:
 
   deploy_playground:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+#    if: github.ref == 'refs/heads/master'
     name: Deploy playground to GitHub Pages
     needs: [build]
     steps:
