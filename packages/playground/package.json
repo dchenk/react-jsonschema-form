@@ -48,7 +48,7 @@
     "@rjsf/core": "^4.0.0",
     "@rjsf/fluent-ui": "^4.0.0",
     "@rjsf/material-ui": "^4.0.0",
-    "@rjsf/primereact": "file:../primereact",
+    "@rjsf/primereact": "file:.yalc/@rjsf/primereact",
     "@rjsf/semantic-ui": "^4.0.0",
     "ajv": "^6.7.0",
     "antd": "^4.3.5",
