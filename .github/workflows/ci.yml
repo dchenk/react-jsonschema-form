@@ -23,11 +23,11 @@ jobs:
     - run: npm run lint
     - run: npm run cs-check
 
-    - name: Build with Netlify badge
-      if: github.ref != 'refs/heads/master'
-      run: npm run build
-      env:
-        SHOW_NETLIFY_BADGE: true
+#    - name: Build with Netlify badge
+#      if: github.ref != 'refs/heads/master'
+#      run: npm run build
+#      env:
+#        SHOW_NETLIFY_BADGE: true
     - name: Build
 #      if: github.ref == 'refs/heads/master'
       run: npm run build
