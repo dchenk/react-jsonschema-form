@@ -129,7 +129,7 @@ var DefaultArrayItem = function DefaultArrayItem(props) {
   var canMoveItems = props.hasMoveUp || props.hasMoveDown;
   return React.createElement("div", {
     key: props.key,
-    className: "flex align-items-start gap-2 p-2 border border-round"
+    className: "flex align-items-start gap-2 p-2 border-1 border-round"
   }, React.createElement("div", {
     className: "flex-grow-1"
   }, props.children), React.createElement("div", null, props.hasToolbar && React.createElement("div", {
@@ -245,7 +245,7 @@ var TitleField = function TitleField(_ref) {
   var title = _ref.title,
       uiSchema = _ref.uiSchema;
   return React.createElement("div", {
-    className: "border-bottom-1 border-500 mb-2"
+    className: "border-bottom-1 mb-2"
   }, React.createElement("h5", null, uiSchema && uiSchema["ui:title"] || title));
 };
 
