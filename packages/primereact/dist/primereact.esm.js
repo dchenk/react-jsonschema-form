@@ -8,10 +8,11 @@ import { Checkbox } from 'primereact/checkbox';
 import { ColorPicker } from 'primereact/colorpicker';
 import { Password } from 'primereact/password';
 import { RadioButton } from 'primereact/radiobutton';
-import { InputText } from 'primereact/inputtext';
+import { Slider } from 'primereact/slider';
 import { Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { InputText } from 'primereact/inputtext';
 import { InputNumber } from 'primereact/inputnumber';
 
 function _extends() {
@@ -386,7 +387,9 @@ var CheckboxesWidget = function CheckboxesWidget(_ref) {
 
   return React.createElement("div", null, React.createElement("label", {
     htmlFor: id
-  }, label || schema.title), React.createElement("div", null, enumOptions.map(function (option, index) {
+  }, label || schema.title), React.createElement("div", {
+    className: cn("flex", inline ? "gap-3" : "gap-2")
+  }, enumOptions.map(function (option, index) {
     var checked = Array.isArray(value) ? value.includes(option.value) : value === option.value;
     var itemDisabled = Array.isArray(enumDisabled) && enumDisabled.includes(option.value);
     return React.createElement("div", {
@@ -558,14 +561,16 @@ var RadioWidget = function RadioWidget(_ref) {
   return React.createElement("div", null, React.createElement("label", {
     htmlFor: id,
     className: "block"
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), enumOptions.map(function (option, i) {
-    var itemDisabled = Array.isArray(enumDisabled) && enumDisabled.indexOf(option.value) !== -1;
+  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement("div", {
+    className: cn("flex", inline ? "gap-3" : "gap-2")
+  }, enumOptions.map(function (option, i) {
+    var itemDisabled = Array.isArray(enumDisabled) && enumDisabled.includes(option.value);
     var checked = option.value == value;
     return React.createElement("div", {
+      key: i,
       className: cn(inline ? "inline-flex" : "flex", "align-items-start")
     }, React.createElement(RadioButton, {
       inputId: option.id,
-      key: i,
       name: id,
       disabled: disabled || itemDisabled || readonly,
       checked: checked,
@@ -576,7 +581,7 @@ var RadioWidget = function RadioWidget(_ref) {
       htmlFor: option.id,
       className: "ml-2"
     }, option.label));
-  }));
+  })));
 };
 
 var rangeSpec = utils.rangeSpec;
@@ -585,9 +590,6 @@ var RangeWidget = function RangeWidget(_ref) {
   var value = _ref.value,
       readonly = _ref.readonly,
       disabled = _ref.disabled,
-      onBlur = _ref.onBlur,
-      onFocus = _ref.onFocus,
-      options = _ref.options,
       schema = _ref.schema,
       onChange = _ref.onChange,
       required = _ref.required,
@@ -602,34 +604,19 @@ var RangeWidget = function RangeWidget(_ref) {
   }, rangeSpec(schema));
 
   var _onChange = function _onChange(_ref2) {
-    var value = _ref2.target.value;
-    return onChange(value === "" ? options.emptyValue : value);
-  };
-
-  var _onBlur = function _onBlur(_ref3) {
-    var value = _ref3.target.value;
-    return onBlur(id, value);
-  };
-
-  var _onFocus = function _onFocus(_ref4) {
-    var value = _ref4.target.value;
-    return onFocus(id, value);
+    var value = _ref2.value;
+    return onChange(value);
   };
 
   return React.createElement("div", null, React.createElement("label", {
     htmlFor: id,
     className: "block"
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(InputText, Object.assign({
-    type: "range",
-    required: required,
-    disabled: disabled,
-    readOnly: readonly,
-    onChange: _onChange,
-    onBlur: _onBlur,
-    onFocus: _onFocus
-  }, sliderProps)), React.createElement("span", {
-    className: "range-view"
-  }, value));
+  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(Slider, Object.assign({
+    disabled: disabled || readonly,
+    onChange: _onChange
+  }, sliderProps, {
+    range: false
+  })));
 };
 
 var asNumber = utils.asNumber,
@@ -965,6 +952,7 @@ var _getDefaultRegistry = /*#__PURE__*/getDefaultRegistry$1(),
     widgets = _getDefaultRegistry.widgets;
 
 var DefaultChildren = /*#__PURE__*/React.createElement(Button, {
+  className: "mt-3",
   type: "submit",
   label: "Submit"
 });
