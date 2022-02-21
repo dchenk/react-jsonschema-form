@@ -270,13 +270,13 @@ var FieldTemplate = function FieldTemplate(_ref) {
 
   return React.createElement("div", null, children, displayLabel && rawDescription && React.createElement("div", {
     className: cn("text-sm", rawErrors.length > 0 ? "text-color-danger" : "text-color-muted")
-  }, rawDescription), rawErrors.length > 0 && React.createElement("ul", null, rawErrors.map(function (error) {
+  }, rawDescription), rawErrors.length > 0 && React.createElement("ul", {
+    className: "error-detail"
+  }, rawErrors.map(function (error) {
     return React.createElement("li", {
       key: error,
-      className: "m-0 p-0"
-    }, React.createElement("small", {
-      className: "m-0 text-color-danger"
-    }, error));
+      className: "text-sm text-color-danger m-0 p-0"
+    }, error);
   })), rawHelp && React.createElement("div", {
     id: id,
     className: cn("text-sm", rawErrors.length > 0 ? "text-color-danger" : "text-color-muted")
@@ -326,7 +326,7 @@ var CheckboxWidget = function CheckboxWidget(props) {
 
   var desc = label || schema.description;
   return React.createElement("div", {
-    className: "flex align-items-start"
+    className: "flex align-items-start gap-2"
   }, React.createElement(Checkbox, {
     inputId: id,
     checked: typeof value === "undefined" ? false : value,
@@ -334,8 +334,7 @@ var CheckboxWidget = function CheckboxWidget(props) {
     disabled: disabled || readonly,
     onChange: _onChange
   }), React.createElement("label", {
-    htmlFor: id,
-    className: "ml-2"
+    htmlFor: id
   }, desc));
 };
 
@@ -385,16 +384,18 @@ var CheckboxesWidget = function CheckboxesWidget(_ref) {
     };
   };
 
-  return React.createElement("div", null, React.createElement("label", {
-    htmlFor: id
-  }, label || schema.title), React.createElement("div", {
+  var labelValue = label || schema.title;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
+    htmlFor: id,
+    className: "mb-1"
+  }, labelValue), React.createElement("div", {
     className: cn("flex", inline ? "gap-3" : "gap-2")
   }, enumOptions.map(function (option, index) {
     var checked = Array.isArray(value) ? value.includes(option.value) : value === option.value;
     var itemDisabled = Array.isArray(enumDisabled) && enumDisabled.includes(option.value);
     return React.createElement("div", {
       key: index,
-      className: cn(inline ? "inline-flex" : "flex", "align-items-start")
+      className: cn(inline ? "inline-flex" : "flex", "align-items-start gap-2")
     }, React.createElement(Checkbox, {
       inputId: id + "_" + index,
       checked: checked,
@@ -402,8 +403,7 @@ var CheckboxesWidget = function CheckboxesWidget(_ref) {
       disabled: disabled || itemDisabled || readonly,
       onChange: _onChange(option)
     }), React.createElement("label", {
-      htmlFor: id + "_" + index,
-      className: "ml-2"
+      htmlFor: id + "_" + index
     }, option.label));
   })));
 };
@@ -439,10 +439,11 @@ var ColorWidget = function ColorWidget(_ref) {
     return onFocus(id, value);
   };
 
-  return React.createElement("div", null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: cn("block", rawErrors.length > 0 ? "text-color-danger" : undefined)
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(ColorPicker, {
+    className: cn("block mb-1", rawErrors.length > 0 && "text-color-danger")
+  }, labelValue, required ? "*" : null), React.createElement(ColorPicker, {
     inputId: id,
     value: value || "",
     disabled: disabled,
@@ -521,10 +522,11 @@ var PasswordWidget = function PasswordWidget(_ref) {
     return onFocus(id, value);
   };
 
-  return React.createElement("div", null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: cn("block", rawErrors.length > 0 ? "text-color-danger" : undefined)
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(Password, {
+    className: cn("block mb-1", rawErrors.length > 0 && "text-color-danger")
+  }, labelValue, required ? "*" : null), React.createElement(Password, {
     inputId: id,
     autoFocus: autofocus,
     className: rawErrors.length > 0 ? "p-invalid" : undefined,
@@ -558,17 +560,18 @@ var RadioWidget = function RadioWidget(_ref) {
   };
 
   var inline = Boolean(options && options.inline);
-  return React.createElement("div", null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: "block"
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement("div", {
+    className: "block mb-1"
+  }, labelValue, required ? "*" : null), React.createElement("div", {
     className: cn("flex", inline ? "gap-3" : "gap-2")
   }, enumOptions.map(function (option, i) {
     var itemDisabled = Array.isArray(enumDisabled) && enumDisabled.includes(option.value);
     var checked = option.value == value;
     return React.createElement("div", {
       key: i,
-      className: cn(inline ? "inline-flex" : "flex", "align-items-start")
+      className: cn(inline ? "inline-flex" : "flex", "align-items-start gap-2")
     }, React.createElement(RadioButton, {
       inputId: option.id,
       name: id,
@@ -578,8 +581,7 @@ var RadioWidget = function RadioWidget(_ref) {
       value: option.value,
       onChange: _onChange
     }), React.createElement("label", {
-      htmlFor: option.id,
-      className: "ml-2"
+      htmlFor: option.id
     }, option.label));
   })));
 };
@@ -608,10 +610,11 @@ var RangeWidget = function RangeWidget(_ref) {
     return onChange(value);
   };
 
-  return React.createElement("div", null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: "block"
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(Slider, Object.assign({
+    className: "block mb-1"
+  }, labelValue, required ? "*" : null), React.createElement(Slider, Object.assign({
     disabled: disabled || readonly,
     onChange: _onChange
   }, sliderProps, {
@@ -709,12 +712,13 @@ var SelectWidget = function SelectWidget(_ref) {
     return event.value;
   };
 
+  var labelValue = label || schema.title;
   return React.createElement("div", {
     className: "mb-2"
-  }, React.createElement("label", {
+  }, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: cn("block", rawErrors.length > 0 ? "text-color-danger" : undefined)
-  }, label || schema.title, (label || schema.title) && required ? "*" : null), multiple ? React.createElement(MultiSelect, {
+    className: cn("block mb-1", rawErrors.length > 0 && "text-color-danger")
+  }, labelValue, required ? "*" : null), multiple ? React.createElement(MultiSelect, {
     id: id,
     value: typeof value === "undefined" ? emptyValue : value,
     options: optionsList,
@@ -784,10 +788,11 @@ var TextareaWidget = function TextareaWidget(_ref) {
     return onFocus(id, value);
   };
 
-  return React.createElement(React.Fragment, null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: cn("block", rawErrors.length > 0 ? "text-color-danger" : undefined)
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(InputTextarea, {
+    className: cn("block mb-1", rawErrors.length > 0 && "text-color-danger")
+  }, labelValue, required ? "*" : null), React.createElement(InputTextarea, {
     id: id,
     className: cn("w-full", rawErrors.length > 0 ? "p-invalid" : ""),
     placeholder: placeholder,
@@ -839,10 +844,11 @@ var TextWidget = function TextWidget(_ref) {
   };
 
   var inputType = (type || schema.type) === "string" ? "text" : "" + (type || schema.type);
-  return React.createElement("div", null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: cn("block", rawErrors.length > 0 ? "text-color-danger" : undefined)
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(InputText, {
+    className: cn("block mb-1", rawErrors.length > 0 && "text-color-danger")
+  }, labelValue, required ? "*" : null), React.createElement(InputText, {
     id: id,
     placeholder: placeholder,
     autoFocus: autofocus,
@@ -895,10 +901,11 @@ var UpDownWidget = function UpDownWidget(_ref) {
     return onFocus(id, value);
   };
 
-  return React.createElement("div", null, React.createElement("label", {
+  var labelValue = uiSchema["ui:title"] || schema.title || label;
+  return React.createElement("div", null, labelValue && React.createElement("label", {
     htmlFor: id,
-    className: "block"
-  }, uiSchema["ui:title"] || schema.title || label, (label || uiSchema["ui:title"] || schema.title) && required ? "*" : null), React.createElement(InputNumber, {
+    className: "block mb-1"
+  }, labelValue, required ? "*" : null), React.createElement(InputNumber, {
     id: id,
     autoFocus: autofocus,
     required: required,

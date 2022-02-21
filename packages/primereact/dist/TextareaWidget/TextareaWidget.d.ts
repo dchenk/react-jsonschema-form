@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { WidgetProps } from "@rjsf/core";
 declare type CustomWidgetProps = WidgetProps & {
     options: any;
